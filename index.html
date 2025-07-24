@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ứng dụng nhận diện và phân loại trái cây</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>ỨNG DỤNG NHẬN DIỆN VÀ PHÂN LOẠI TRÁI CÂY</h2>
+
+  <div class="upload-row">
+    <div id="upload-area" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+      <p>+ Tải tệp hoặc kéo thả (1–4 tấm)<br>+ Ảnh sẽ tự động tạo dạng lưới dựa theo số lượng</p>
+      <input type="file" id="file-input" multiple accept="image/*" onchange="handleFiles(this.files)" />
+      <p id="file-status">Chưa có tệp nào được chọn</p>
+    </div>
+
+    <div class="table-area">
+      <h3>PHÂN LOẠI</h3>
+      <table>
+        <thead><tr><th>Tên</th><th>Số lượng</th></tr></thead>
+        <tbody id="classification-table">
+          <tr><td>....................</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="control-row">
+    <!-- Đối tượng -->
+    <div class="control-box">
+      <label>Đối tượng:</label>
+      <select id="object-select" onchange="handleObjectChange()">
+        <option value="toan-anh">Toàn ảnh</option>
+        <option value="doi-tuong">Đối tượng trong ảnh</option>
+      </select>
+      <input type="text" id="object-name" class="hidden" placeholder="Nhập tên đối tượng..." />
+    </div>
+
+    <!-- Chức năng -->
+    <div class="control-box">
+      <label>Chức năng:</label>
+      <select id="function-select" onchange="handleFunctionChange()">
+        <option value="ro-net">Rõ nét</option>
+        <option value="sac-bien">Sắc biên</option>
+      </select>
+      <select id="sub-function-select" class="hidden">
+        <option value="giu-mau">Giữ màu gốc</option>
+        <option value="grayscale">Grayscale</option>
+      </select>
+    </div>
+
+    <!-- Nút xử lý -->
+    <div class="control-box small-box">
+      <label>&nbsp;</label>
+      <button onclick="handleProcess()">Xử lý</button>
+    </div>
+
+    <!-- Thông tin -->
+    <div class="control-box info-box hidden" id="info-options">
+      <label>Thông tin:</label>
+      <div class="radio-group">
+        <label><input type="radio" name="info" value="cong-dung" onchange="showInfo('cong-dung')"> Công dụng</label>
+        <label><input type="radio" name="info" value="dinh-duong" onchange="showInfo('dinh-duong')"> Dinh dưỡng</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="result-row">
+    <div id="image-grid"></div>
+    <div class="info-area">
+      <div id="info-box"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
