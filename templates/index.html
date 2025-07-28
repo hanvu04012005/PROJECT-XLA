@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ứng dụng nhận diện và phân loại trái cây</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="container">
+    <h2>ỨNG DỤNG NHẬN DIỆN VÀ PHÂN LOẠI TRÁI CÂY</h2>
+
+    <!-- PHẦN UPLOAD ẢNH -->
+    <div class="upload-section">
+      <div class="upload-area" id="upload-area" ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+        <div class="upload-content">
+          <div class="upload-icon"></div>
+          <h3>Tải ảnh trái cây</h3>
+          <p class="upload-instruction">
+            Kéo thả ảnh vào đây hoặc <span class="browse-text">chọn file</span><br>
+            <small></small>
+          </p>
+          <input type="file" id="file-input" multiple accept="image/*" onchange="handleFiles(this.files)" />
+        </div>
+        
+        <div class="file-status" id="file-status">Chưa có ảnh nào được chọn</div>
+        
+        <!-- PREVIEW ẢNH -->
+        <div class="image-preview-container" id="image-preview-container">
+          <div class="image-grid" id="image-grid"></div>
+          <div class="image-actions">
+            <button class="reset-btn" onclick="resetUpload()">
+               Chọn ảnh khác
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BẢNG PHÂN LOẠI -->
+      <div class="classification-panel">
+        <h3> Kết quả phân loại</h3>
+        <div class="classification-content">
+          <table class="classification-table">
+            <thead>
+              <tr>
+                <th>Tên trái cây</th>
+                <th>Số lượng</th>
+              </tr>
+            </thead>
+            <tbody id="classification-table">
+              <tr class="empty-row">
+                <td colspan="2">Chưa có dữ liệu</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHẦN ĐIỀU KHIỂN -->
+    <div class="control-section">
+      <div class="control-grid">
+                  <div class="control-group">
+           <label> Chế độ xử lý:</label>
+          <select id="object-select" onchange="handleObjectChange()">
+            <option value="toan-anh" selected>Toàn ảnh</option>
+            <option value="doi-tuong">Đối tượng cụ thể</option>
+          </select>
+          <input type="text" id="object-name" class="hidden" placeholder="Nhập tên trái cây..." />
+        </div>
+
+                  <div class="control-group">
+           <label> Chức năng xử lý:</label>
+          <select id="function-select" onchange="handleFunctionChange()">
+            <option value="ro-net" selected>Làm rõ nét</option>
+            <option value="sac-bien">Phát hiện biên</option>
+          </select>
+          <select id="sub-function-select" class="hidden">
+            <option value="giu-mau">Giữ màu gốc</option>
+            <option value="grayscale">Grayscale</option>
+          </select>
+        </div>
+
+                  <div class="control-group">
+           <label> Thông tin:</label>
+          <div class="info-options hidden" id="info-options">
+            <label class="radio-option">
+              <input type="radio" name="info" value="cong-dung" onchange="showInfo('cong-dung')">
+              <span>Công dụng</span>
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="info" value="dinh-duong" onchange="showInfo('dinh-duong')">
+              <span>Dinh dưỡng</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>&nbsp;</label>
+          <button class="process-btn" onclick="handleProcess()">
+            <span class="btn-text"> Xử lý ảnh</span>
+            <span class="btn-loading hidden"> Đang xử lý...</span>
+          </button>
+        </div>
+        
+
+      </div>
+    </div>
+
+    <!-- PHẦN KẾT QUẢ -->
+    <div class="result-section" id="result-section">
+      <div class="result-layout">
+        <!-- KẾT QUẢ ẢNH -->
+        <div class="result-images-container">
+          <h3> Ảnh kết quả</h3>
+          <div class="result-images" id="result-image-area">
+            <div class="no-result">
+                             <div class="no-result-icon"></div>
+              <p>Chưa có ảnh kết quả</p>
+              <small>Hãy tải ảnh và nhấn "Xử lý ảnh"</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- THÔNG TIN CHI TIẾT -->
+        <div class="result-info-container">
+          <h3> Thông tin chi tiết</h3>
+          <div class="info-content" id="info-box">
+            <div class="no-info">
+              <p>Chưa có thông tin</p>
+              <small>Chọn "Đối tượng cụ thể" và loại thông tin để xem</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
